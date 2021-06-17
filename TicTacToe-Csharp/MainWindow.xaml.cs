@@ -25,6 +25,7 @@ namespace TicTacToe_Csharp
 
         public MainWindow()
         {
+            // TODO - Check functionality
             InitializeComponent();
         }
 
