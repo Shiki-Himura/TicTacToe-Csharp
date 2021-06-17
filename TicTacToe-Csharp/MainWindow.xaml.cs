@@ -54,14 +54,14 @@ namespace TicTacToe_Csharp
             field[x][y] = 1;
             player_one = false;
 
-            BestMove(field);
+            BestMove(field, player_one);
             Render(field);
             Validate(field);
             //WinnerAlert(field);
 
         }
 
-        private void BestMove(int[][] tmp_field)
+        private void BestMove(int[][] tmp_field, bool player_one)
         {
             int rnd = GetRandomNumber(0, 100);
             int bestScore = int.MaxValue;
@@ -74,8 +74,8 @@ namespace TicTacToe_Csharp
                     if (tmp_field[i][j] == 0)
                     {
                         tmp_field[i][j] = 2;
-
-                        var score = MiniMax(tmp_field, true);
+                        player_one = true;
+                        var score = MiniMax(tmp_field, player_one);
                         if (score < bestScore)
                         {
                             bestScore = score;
@@ -86,7 +86,7 @@ namespace TicTacToe_Csharp
                 }
             }
 
-            if (rnd < 2)//difficulty)
+            if (rnd < difficulty)
             {
                 var rndMove = GetRandomIndex(tmp_field);
                 tmp_field[rndMove.Item1][rndMove.Item2] = 2;
@@ -97,14 +97,14 @@ namespace TicTacToe_Csharp
             }
         }
 
-        private int MiniMax(int[][] tmp_field, bool player)
+        private int MiniMax(int[][] tmp_field, bool player_one)
         {
             int bestScore;
             int game_over = Validate(tmp_field);
 
             if (game_over != 2)
             {
-                if (player == true && game_over != 0)
+                if (player_one == true && game_over != 0)
                     return -10;
                 else if (game_over != 0)
                     return 10;
@@ -112,7 +112,7 @@ namespace TicTacToe_Csharp
                     return 0;
             }
 
-            if (player == true)
+            if (player_one == true)
             {
                 bestScore = int.MinValue;
                 for (var i = 0; i < 3; i++)
