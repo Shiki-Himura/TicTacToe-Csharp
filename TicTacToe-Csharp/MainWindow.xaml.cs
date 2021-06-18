@@ -21,7 +21,7 @@ namespace TicTacToe_Csharp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static int difficulty;
+        public int difficulty;
 
         public MainWindow()
         {
@@ -54,39 +54,37 @@ namespace TicTacToe_Csharp
             field[x][y] = 1;
             player_one = false;
 
-            BestMove(field, player_one);
+            BestMove(field);
             Render(field);
-            Validate(field);
             //WinnerAlert(field);
 
         }
 
-        private void BestMove(int[][] tmp_field, bool player_one)
+        private void BestMove(int[][] tmp_field)
         {
             int rnd = GetRandomNumber(0, 100);
             int bestScore = int.MaxValue;
-            var move = new {i = 0, j = 0};
+            (int i, int j) move = (i: 0, j: 0);
 
-            for (var i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
-                for (var j = 0; j < 3; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     if (tmp_field[i][j] == 0)
                     {
                         tmp_field[i][j] = 2;
-                        player_one = true;
-                        var score = MiniMax(tmp_field, player_one);
+                        int score = MiniMax(tmp_field, true);
                         if (score < bestScore)
                         {
                             bestScore = score;
-                            move =  new{ i, j};
+                            move = (i, j);
                         }
                         tmp_field[i][j] = 0;
                     }
                 }
             }
 
-            if (rnd < difficulty)
+            if (rnd < 20) //difficulty)
             {
                 var rndMove = GetRandomIndex(tmp_field);
                 tmp_field[rndMove.Item1][rndMove.Item2] = 2;
@@ -104,25 +102,31 @@ namespace TicTacToe_Csharp
 
             if (game_over != 2)
             {
-                if (player_one == true && game_over != 0)
+                if (player_one && game_over != 0)
+                {
                     return -10;
+                }
                 else if (game_over != 0)
+                {
                     return 10;
+                }
                 else
+                {
                     return 0;
+                }
             }
 
-            if (player_one == true)
+            if (player_one)
             {
                 bestScore = int.MinValue;
-                for (var i = 0; i < 3; i++)
+                for (int i = 0; i < 3; i++)
                 {
-                    for (var j = 0; j < 3; j++)
+                    for (int j = 0; j < 3; j++)
                     {
                         if (tmp_field[i][j] == 0)
                         {
                             tmp_field[i][j] = 1;
-                            var score = MiniMax(tmp_field, false);
+                            int score = MiniMax(tmp_field, player_one);
 
                             if (score > bestScore)
                             {
@@ -137,14 +141,14 @@ namespace TicTacToe_Csharp
             else
             {
                 bestScore = int.MaxValue;
-                for (var i = 0; i < 3; i++)
+                for (int i = 0; i < 3; i++)
                 {
-                    for (var j = 0; j < 3; j++)
+                    for (int j = 0; j < 3; j++)
                     {
                         if (tmp_field[i][j] == 0)
                         {
                             tmp_field[i][j] = 2;
-                            var score = MiniMax(tmp_field, true);
+                            int score = MiniMax(tmp_field, player_one);
 
                             if (score < bestScore)
                             {
@@ -159,7 +163,7 @@ namespace TicTacToe_Csharp
             }
         }
 
-        private List<Tuple<int,int>> GetPossibleMoves(int[][] tmp_field)
+        private static List<Tuple<int, int>> GetPossibleMoves(int[][] tmp_field)
         {
             List<Tuple<int, int>> possible = new List<Tuple<int, int>>();
 
@@ -176,37 +180,30 @@ namespace TicTacToe_Csharp
             return possible;
         }
 
-        private int GetRandomNumber(int min, int max)
+        private static int GetRandomNumber(int min, int max)
         {
-            Random rng = new Random();
+            Random rng = new();
             return rng.Next(min, max);
         }
 
         private void Render(int[][] tmp_field)
         {
-            Grid myGrid = (Grid)this.Content;
+            Grid myGrid = (Grid)Content;
             List<Button> btn_List = myGrid.Children.Cast<Button>().Where(x => x.GetType() == typeof(Button)).ToList();
 
-            int[] newArr = new int[tmp_field.Length];
+            int[] newArr = tmp_field.SelectMany(x => x).ToArray();
 
-            for (var i = 0; i < tmp_field.Length; i++)
-            {
-                newArr = newArr.Concat(tmp_field[i]).ToArray();
-            }
-
-            for (var i = 0; i < newArr.Length; i++)
+            for (int i = 0; i < newArr.Length; i++)
             {
                 if (newArr[i] != 0 && newArr[i] == 2)
                 {
                     btn_List[i].Content = "O";
                     btn_List[i].IsHitTestVisible = false;
-                    //computer.Content = "O";
-                    //computer.IsHitTestVisible = false;
                 }
             }
         }
 
-        private int Validate(int[][]tmp_field)
+        private static int Validate(int[][] tmp_field)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -223,7 +220,7 @@ namespace TicTacToe_Csharp
                 return 1;
             }
 
-            var empty_field = false;
+            bool empty_field = false;
 
             for (int i = 0; i < 3; i++)
             {
@@ -246,7 +243,7 @@ namespace TicTacToe_Csharp
             }
         }
 
-        private bool Equals3(int one, int two, int three)
+        private static bool Equals3(int one, int two, int three)
         {
             return one == two && one == three;
         }
