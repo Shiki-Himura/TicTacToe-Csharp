@@ -23,5 +23,15 @@ namespace TicTacToe_Csharp
         {
             InitializeComponent();
         }
+        // TODO - Connect window to main window. 
+        // TODO - get buttons and connect to method.
+
+        private List<Button> GetButtons()
+        {
+            Grid myGrid = (Grid)Content;
+            List<Button> btn_List = myGrid.Children.Cast<Button>().Where(x => x.GetType() == typeof(Button)).ToList();
+
+            return btn_List;
+        }
     }
 }
