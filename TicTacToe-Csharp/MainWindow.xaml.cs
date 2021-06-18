@@ -21,7 +21,13 @@ namespace TicTacToe_Csharp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int difficulty;
+        private readonly int difficulty;
+        private readonly int[][] field = new int[][]
+            {
+                new int[]{0, 0, 0 },
+                new int[]{0, 0, 0 },
+                new int[]{0, 0, 0 }
+            };
 
         public MainWindow()
         {
@@ -36,14 +42,7 @@ namespace TicTacToe_Csharp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-
-            int[][] field = new int[][]
-            {
-                new int[]{0, 0, 0 },
-                new int[]{0, 0, 0 },
-                new int[]{0, 0, 0 }
-            };
+            Button btn = (Button)sender;            
 
             bool player_one = true;
             string button = btn.Tag.ToString();
@@ -52,11 +51,11 @@ namespace TicTacToe_Csharp
             btn.Content = "X";
             btn.IsHitTestVisible = false;
             field[x][y] = 1;
-            player_one = false;
 
             BestMove(field);
             Render(field);
-            //WinnerAlert(field);
+            Validate(field);
+            WinnerAlert(field);
 
         }
 
@@ -86,7 +85,7 @@ namespace TicTacToe_Csharp
 
             if (rnd < 20) //difficulty)
             {
-                var rndMove = GetRandomIndex(tmp_field);
+                Tuple<int, int> rndMove = GetRandomIndex(tmp_field);
                 tmp_field[rndMove.Item1][rndMove.Item2] = 2;
             }
             else
@@ -126,7 +125,7 @@ namespace TicTacToe_Csharp
                         if (tmp_field[i][j] == 0)
                         {
                             tmp_field[i][j] = 1;
-                            int score = MiniMax(tmp_field, player_one);
+                            int score = MiniMax(tmp_field, false);
 
                             if (score > bestScore)
                             {
@@ -148,7 +147,7 @@ namespace TicTacToe_Csharp
                         if (tmp_field[i][j] == 0)
                         {
                             tmp_field[i][j] = 2;
-                            int score = MiniMax(tmp_field, player_one);
+                            int score = MiniMax(tmp_field, true);
 
                             if (score < bestScore)
                             {
@@ -165,7 +164,7 @@ namespace TicTacToe_Csharp
 
         private static List<Tuple<int, int>> GetPossibleMoves(int[][] tmp_field)
         {
-            List<Tuple<int, int>> possible = new List<Tuple<int, int>>();
+            List<Tuple<int, int>> possible = new();
 
             for (int i = 0; i < 3; i++)
             {
@@ -188,8 +187,7 @@ namespace TicTacToe_Csharp
 
         private void Render(int[][] tmp_field)
         {
-            Grid myGrid = (Grid)Content;
-            List<Button> btn_List = myGrid.Children.Cast<Button>().Where(x => x.GetType() == typeof(Button)).ToList();
+            List<Button> btn = GetButtons();
 
             int[] newArr = tmp_field.SelectMany(x => x).ToArray();
 
@@ -197,8 +195,8 @@ namespace TicTacToe_Csharp
             {
                 if (newArr[i] != 0 && newArr[i] == 2)
                 {
-                    btn_List[i].Content = "O";
-                    btn_List[i].IsHitTestVisible = false;
+                    btn[i].Content = "O";
+                    btn[i].IsHitTestVisible = false;
                 }
             }
         }
@@ -248,20 +246,21 @@ namespace TicTacToe_Csharp
             return one == two && one == three;
         }
 
-        //private void ReloadPage()
-        //{
-        //    
-        //}
+        private void WinnerAlert(int[][] field)
+        {
+            List<Button> btn = GetButtons();
 
-        //private void WinnerAlert(int[][] field)
-        //{
-        //    if (Validate(field) == 1)
-        //    {
-        //        alert("You´ve Won!");
-        //    }
-        //}
+            if (Validate(field) == 1)
+            {
+                foreach (Button button in btn)
+                {
+                    IsHitTestVisible = false;
+                }
+                MessageBox.Show("You´ve Won!");
+            }
+        }
 
-        private Tuple<int, int> GetRandomIndex(int[][] tmp_field)
+        private static Tuple<int, int> GetRandomIndex(int[][] tmp_field)
         {
             List<Tuple<int, int>> array = GetPossibleMoves(tmp_field);
             int min = 0;
@@ -270,19 +269,12 @@ namespace TicTacToe_Csharp
             return array[GetRandomNumber(min, max)];
         }
 
-        //private void GetButtons()
-        //{
-        //    var easy_btn = document.getElementById("visiblebutton1");
-        //    var hard_btn = document.getElementById("visiblebutton2");
-        //
-        //    easy_btn.style.visibility = "hidden";
-        //    hard_btn.style.visibility = "hidden";
-        //
-        //    var game = document.getElementsByClassName("game");
-        //    for (var i = 0; i < game.length; i++)
-        //    {
-        //        game[i].style.visibility = "visible";
-        //    }
-        //}
+        private List<Button> GetButtons()
+        {
+            Grid myGrid = (Grid)Content;
+            List<Button> btn_List = myGrid.Children.Cast<Button>().Where(x => x.GetType() == typeof(Button)).ToList();
+
+            return btn_List;
+        }
     }
 }
