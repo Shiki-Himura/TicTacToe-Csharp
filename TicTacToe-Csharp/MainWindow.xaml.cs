@@ -21,7 +21,7 @@ namespace TicTacToe_Csharp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly int difficulty;
+        private int difficulty;
         private readonly int[][] field = new int[][]
             {
                 new int[]{0, 0, 0 },
@@ -31,7 +31,6 @@ namespace TicTacToe_Csharp
 
         public MainWindow()
         {
-            // TODO - Check functionality
             InitializeComponent();
         }
 
@@ -54,7 +53,6 @@ namespace TicTacToe_Csharp
 
             BestMove(field);
             Render(field);
-            Validate(field);
             WinnerAlert(field);
 
         }
