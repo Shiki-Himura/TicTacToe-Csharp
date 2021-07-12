@@ -81,7 +81,7 @@ namespace TicTacToe_Csharp
                 }
             }
 
-            if (rnd < 20) //difficulty)
+            if (rnd < difficulty)
             {
                 Tuple<int, int> rndMove = GetRandomIndex(tmp_field);
                 tmp_field[rndMove.Item1][rndMove.Item2] = 2;
@@ -274,5 +274,13 @@ namespace TicTacToe_Csharp
 
             return btn_List;
         }
+
+        /*private List<RadioButton> GetRadioButtons()
+        {
+            Grid myGrid = (Grid)Content;
+            List<RadioButton> btn_List = myGrid.Children.Cast<RadioButton>().Where(x => x.GetType() == typeof(RadioButton)).ToList();
+
+            return btn_List;
+        }*/
     }
 }

@@ -19,19 +19,34 @@ namespace TicTacToe_Csharp
     /// </summary>
     public partial class Difficulty_Window : Window
     {
+        private int difficulty;
         public Difficulty_Window()
         {
             InitializeComponent();
         }
-        // TODO - Connect window to main window. 
-        // TODO - get buttons and connect to method.
 
-        private List<Button> GetButtons()
+        private void Button_Checked(object sender, RoutedEventArgs e)
         {
-            Grid myGrid = (Grid)Content;
-            List<Button> btn_List = myGrid.Children.Cast<Button>().Where(x => x.GetType() == typeof(Button)).ToList();
+            RadioButton rbtn = (RadioButton)sender;
 
-            return btn_List;
+            if (rbtn.IsChecked == true && rbtn.Name == "Easy")
+            {
+                difficulty = 80;
+            }
+            else
+            {
+                difficulty = 20;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow game = new();
+            game.SetDifficulty(difficulty);
+            game.Show();
+
+            //TODO refactor closing the window
+            Close();
         }
     }
 }
