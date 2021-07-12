@@ -44,8 +44,6 @@ namespace TicTacToe_Csharp
             MainWindow game = new();
             game.SetDifficulty(difficulty);
             game.Show();
-
-            //TODO refactor closing the window
             Close();
         }
     }

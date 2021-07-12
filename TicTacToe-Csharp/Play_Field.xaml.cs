@@ -274,13 +274,5 @@ namespace TicTacToe_Csharp
 
             return btn_List;
         }
-
-        /*private List<RadioButton> GetRadioButtons()
-        {
-            Grid myGrid = (Grid)Content;
-            List<RadioButton> btn_List = myGrid.Children.Cast<RadioButton>().Where(x => x.GetType() == typeof(RadioButton)).ToList();
-
-            return btn_List;
-        }*/
     }
 }
