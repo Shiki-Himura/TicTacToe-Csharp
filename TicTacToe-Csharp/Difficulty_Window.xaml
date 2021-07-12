@@ -5,23 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TicTacToe_Csharp"
         mc:Ignorable="d"
-        Title="Difficulty_Window" Height="450" Width="800">
+        Title="Tic-Tac-Toe" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" TextAlignment="Center" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center">
-            Tic-Tac-Toe
-        </TextBlock>
-        
-        <RadioButton x:Name="Easy" GroupName="rBtn" Grid.Row="1" VerticalAlignment="Center" HorizontalContentAlignment="Left"
-                     HorizontalAlignment="Left" Margin="200,0,0,0" FontSize="24" VerticalContentAlignment="Center" 
-                     FontFamily="Comic Sans MS" FontStyle="Normal" Background="White" Checked="Button_Checked">Easy-Mode</RadioButton>
-        <RadioButton x:Name="Hard" GroupName="rBtn" Grid.Row="1" VerticalAlignment="Center" HorizontalContentAlignment="Left"
-                     HorizontalAlignment="Right" Margin="0,0,200,0" FontSize="24" VerticalContentAlignment="Center" 
-                     FontFamily="Comic Sans MS" FontStyle="Normal" Background="White" Checked="Button_Checked">Hard-Mode</RadioButton>
+        <TextBlock Grid.Row="0" TextAlignment="Center" FontSize="72" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Choose a Difficulty"/>
+
+        <RadioButton x:Name="Easy" GroupName="rBtn" Grid.Row="1" VerticalAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="200,0,0,0" FontSize="24" VerticalContentAlignment="Center" FontFamily="Comic Sans MS" FontStyle="Normal" Background="White" Checked="Button_Checked" Foreground="Green" FontWeight="Bold">Easy-Mode</RadioButton>        
+        <RadioButton x:Name="Hard" GroupName="rBtn" Grid.Row="1" VerticalAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Right" Margin="0,0,200,0" FontSize="24" VerticalContentAlignment="Center" FontFamily="Comic Sans MS" FontStyle="Normal" Background="White" Checked="Button_Checked" Foreground="Red" FontWeight="Bold">Hard-Mode</RadioButton>
 
         <Button Height="auto" Width="auto" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Padding="20,5,20,5" Click="Button_Click">Start</Button>
     </Grid>
