@@ -48,12 +48,17 @@ namespace TicTacToe_Csharp
             {
                 game.SetDifficulty(difficulty);
                 game.Show();
-                Close();
+                Hide();
             }
             else
             {
                 MessageBox.Show("Please Select a Difficulty");
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

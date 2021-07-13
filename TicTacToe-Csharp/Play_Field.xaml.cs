@@ -83,7 +83,11 @@ namespace TicTacToe_Csharp
             if (rnd < difficulty)
             {
                 Tuple<int, int> rndMove = GetRandomIndex(tmp_field);
-                tmp_field[rndMove.Item1][rndMove.Item2] = 2;
+
+                if(rndMove != null)
+                {
+                    tmp_field[rndMove.Item1][rndMove.Item2] = 2;
+                }
             }
             else
             {
@@ -235,6 +239,7 @@ namespace TicTacToe_Csharp
         private void WinnerAlert(int[][] field)
         {
             List<Button> btn = GetButtons();
+            Difficulty_Window diff_window = new();
 
             if (Validate(field) == 1)
             {
@@ -243,10 +248,14 @@ namespace TicTacToe_Csharp
                     IsHitTestVisible = false;
                 }
                 MessageBox.Show("You´ve Won!");
-
-                Difficulty_Window diff_window = new();
                 diff_window.Show();
-                Close();
+                Hide();
+            }
+            else if (GetRandomIndex(field) == null)
+            {
+                MessageBox.Show("Tie!");
+                diff_window.Show();
+                Hide();
             }
         }
 
@@ -257,7 +266,14 @@ namespace TicTacToe_Csharp
             int max = array.Count -1;
 
             //TODO - validate board integrity
-            return array[GetRandomNumber(min, max)];
+            if (array.Count > 0)
+            {
+                return array[GetRandomNumber(min, max)];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private List<Button> GetButtons()
