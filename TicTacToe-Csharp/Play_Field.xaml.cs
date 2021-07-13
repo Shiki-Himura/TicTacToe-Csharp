@@ -54,7 +54,6 @@ namespace TicTacToe_Csharp
             BestMove(field);
             Render(field);
             WinnerAlert(field);
-
         }
 
         private void BestMove(int[][] tmp_field)
@@ -244,6 +243,10 @@ namespace TicTacToe_Csharp
                     IsHitTestVisible = false;
                 }
                 MessageBox.Show("You´ve Won!");
+
+                Difficulty_Window diff_window = new();
+                diff_window.Show();
+                Close();
             }
         }
 
@@ -251,8 +254,9 @@ namespace TicTacToe_Csharp
         {
             List<Tuple<int, int>> array = GetPossibleMoves(tmp_field);
             int min = 0;
-            int max = array.Count - 1;
+            int max = array.Count -1;
 
+            //TODO - validate board integrity
             return array[GetRandomNumber(min, max)];
         }
 

@@ -33,7 +33,8 @@ namespace TicTacToe_Csharp
             {
                 difficulty = 80;
             }
-            else
+            
+            if (rbtn.IsChecked == true && rbtn.Name == "Hard")
             {
                 difficulty = 20;
             }
@@ -42,11 +43,17 @@ namespace TicTacToe_Csharp
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow game = new();
-            game.SetDifficulty(difficulty);
-            game.Show();
-            Close();
-            // TODO - reopen the difficulty window
-            // TODO - reopen the playwindow or implement a restart button
+
+            if (difficulty is 80 or 20)
+            {
+                game.SetDifficulty(difficulty);
+                game.Show();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Please Select a Difficulty");
+            }
         }
     }
 }
