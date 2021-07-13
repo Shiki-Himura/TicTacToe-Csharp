@@ -58,7 +58,8 @@ namespace TicTacToe_Csharp
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Environment.Exit(0);
+            //Environment.Exit(0);
+            Application.Current.Shutdown();
         }
     }
 }
