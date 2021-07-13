@@ -45,6 +45,8 @@ namespace TicTacToe_Csharp
             game.SetDifficulty(difficulty);
             game.Show();
             Close();
+            // TODO - reopen the difficulty window
+            // TODO - reopen the playwindow or implement a restart button
         }
     }
 }

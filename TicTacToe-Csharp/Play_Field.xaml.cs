@@ -99,18 +99,7 @@ namespace TicTacToe_Csharp
 
             if (game_over != 2)
             {
-                if (player_one && game_over != 0)
-                {
-                    return -10;
-                }
-                else if (game_over != 0)
-                {
-                    return 10;
-                }
-                else
-                {
-                    return 0;
-                }
+                return player_one && game_over != 0 ? -10 : game_over != 0 ? 10 : 0;
             }
 
             if (player_one)
